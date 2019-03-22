@@ -1,0 +1,19 @@
+<form>
+    <h5 class="col"> {{indicator.name}} </h5>
+    <div class="row col-12">
+        <label class="col-4">
+            <input class="checkbox col-2" name="overlay" type="checkbox" value="overlay" [(ngModel)]="dataReversed"
+                   (change)="reverseData()" checked>
+            <span>Reverse</span>
+        </label>
+
+        <label class="col-3" for="{{indicator.name + '_spinner'}}">Weighting</label>
+        <input class="col-3 displayed-weight-spinner form-control" id="{{indicator.name + '_spinner'}}"
+               type="number"
+               name="indicator-weight" [(ngModel)]="spinner"
+               min="0" max="1" step="0.05" style="align-self: center"/>
+    </div>
+</form>
+<div id="{{indicator.name + '-svg-wrapper'}}">
+    <svg id="{{indicator.name + '_comp_svg'}}" class="custom-chart"></svg>
+</div>

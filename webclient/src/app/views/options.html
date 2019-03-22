@@ -1,0 +1,60 @@
+<topbar></topbar>
+<nav-sidebar></nav-sidebar>
+
+<topbar></topbar>
+<article class="content dashboard page">
+    <div class="col col-xs-12 col-sm-12 col-md-6 col-xl-5">
+        <div class="card sameheight-item">
+            <div class="card-block">
+
+                <div class="title-block">
+                    <h4 class="title">
+                        Change Password
+                    </h4>
+                    <p class="title-description">
+                        Replace your old password with a new one
+                    </p>
+                </div>
+                <form class="form" method="post" #optionsForm="ngForm" (ngSubmit)="onSubmit(optionsForm)">
+                    <div class="form-group">
+                        <label class="control-label" for="old-password-input">
+                            Old Password
+                        </label>
+                        <input class="form-control underlined" type="password" name="old-password"
+                               id="old-password-input" required
+                               placeholder="Old Password" ngModel>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="new-password-input">
+                            New Password
+                        </label>
+                        <input type="password" name="new-password" id="new-password-input" placeholder="New Password"
+                               required
+                               class="form-control underlined" minlength="8"
+                               maxlength="12" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,12}" ngModel>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="repeat-password-input">
+                            Repeat Password
+                        </label>
+                        <input type="password" name="repeat-password" id="repeat-password-input"
+                               placeholder="Repeat new password"
+                               required class="form-control underlined" minlength="8"
+                               maxlength="12" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,12}" ngModel>
+                    </div>
+                    <div *ngIf="updateError" class="form-group form-row-center form-error" id="update-error">
+                        {{error_message}}
+                    </div>
+                    <div class="form-group">
+                        <input [disabled]="!(equalsPW(optionsForm) && optionsForm.form.valid)" type="submit"
+                               id="save-changes-button"
+                               class="btn btn-primary"
+                               value="Save changes"/>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</article>
+
+<custom-footer></custom-footer>

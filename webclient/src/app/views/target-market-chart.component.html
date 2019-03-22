@@ -1,0 +1,24 @@
+<div class="title-block">
+    <h4 class="title">
+        Target Market Chart
+    </h4>
+    <p class="title-description">
+        {{chart.targetMarket}}
+    </p>
+</div>
+<!--
+<div class="form form-inline" style="padding-bottom: 5%;">
+    <div class="form-group col-12">
+        <label class="control-label col-4">Select time period:</label>
+        <input class="form-control col-3" id="start-date" type="date" value="2016-08-01" [(ngModel)]="startDate"
+               pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))">
+        <i class="col-1 fa fa-minus" style="align-self: center;"></i>
+        <input class="form-control col-3" id="end-date" type="date" value="2017-08-01" [(ngModel)]="endDate"
+               pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))">
+        <button class="col-1 fa fa-refresh btn btn-oval btn-secondary" (click)="updateChart()"></button>
+    </div>
+</div>
+-->
+<div id="{{chart.id + '-tm-svg-wrapper'}}" class="col-12 svgWrapper">
+    <svg id="{{chart.id + '_svg'}}" class="custom-chart" width="1100" height="250"></svg>
+</div>

@@ -1,0 +1,35 @@
+<div class="title-block">
+    <h4 class="title">
+        Composite Indicator
+    </h4>
+    <p class="title-description">
+        {{chart.targetMarket}}
+    </p>
+</div>
+<form>
+    <div class="col-12">
+        <label>
+            <input class="checkbox" name="overlay" type="checkbox" value="overlay" [(ngModel)]="showTargetMarketOverlay" (change)="drawCompoundIndicator()" checked>
+            <span>Overlay</span>
+        </label>
+
+        <label class="col-5">
+            <input class="checkbox" name="difference" type="checkbox" value="overlay" [(ngModel)]="showTargetMarketDiff" (change)="drawCompoundIndicator()" checked>
+            <span>Difference</span>
+        </label>
+        <label id="{{chart.id + '_correlation_label'}}">
+            Correlation: {{ciCorrelation}}
+        </label>
+    </div>
+    <div id="compound-indicator-svg-wrapper" class="col-12 svgWrapper">
+        <svg id="{{chart.id + '_svg'}}" class="custom-chart" width="1100" height="250"></svg>
+    </div>
+    <ng-container *ngFor="let indicator of indicators">
+        <indicator-chart #indicatorChart [indicator]="indicator" [chartid]="chart.id" [chartWidth]="chart.chartWidth"></indicator-chart>
+    </ng-container>
+    <div class="col-12">
+        <input class="btn btn-primary" type="button" (click)="updateWeighting()" value="Update" style="float:right"/>
+    </div>
+    <input class="col-2 form-control weight-spinner" id="indicator-id" type="hidden" name="indicator-weight"
+           min="0" max="1" step="0.05" style="align-self: center"/>
+</form>

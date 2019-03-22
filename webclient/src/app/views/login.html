@@ -1,0 +1,37 @@
+<body data-decimal-separator="," data-grouping-separator=".">
+
+<div class="auth">
+    <div class="auth-container">
+        <div class="card">
+            <header class="auth-header">
+                <h1 class="auth-title">
+                    <div class="logo"><span class="l l1"></span> <span class="l l2"></span> <span class="l l3"></span>
+                        <span class="l l4"></span> <span class="l l5"></span></div>
+                    Viz-Report
+                </h1>
+            </header>
+            <div class="auth-content">
+                <p class="text-xs-center">LOGIN TO CONTINUE</p>
+                <form id="login-form" #loginForm="ngForm">
+                    <div class="form-group"><label for="username-input">Username</label>
+                        <input type="email" name="username" id="username-input" required class="form-control underlined"
+                               placeholder="Your email address" ngModel>
+                        <div class="form-group"><label for="password-input">Password</label>
+                            <input type="password" name="password" id="password-input" required
+                                   class="form-control underlined"
+                                   minlength="4"
+                                   maxlength="12" ngModel></div>
+                    </div>
+                    <div *ngIf="loginError" class="form-row form-row-center form-error" id="login-error">Username or password incorrect!
+                    </div>
+                    <div class="form-row form-row-center">
+                        <input type="button" class="btn btn-block btn-primary" value="Login"
+                               (click)="onSubmit(loginForm)"/>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>

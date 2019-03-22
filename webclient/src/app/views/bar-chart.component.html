@@ -1,0 +1,54 @@
+<div class="title-block">
+    <h4 class="title">
+        Correlation between different indicators and selected market
+    </h4>
+    <p class="title-description">
+        Market: {{chart.targetMarket}}
+    </p>
+</div>
+<form role="form">
+    <div class="form-group row">
+        <label class="col-2 control-label col-form-label" for="sel1">Sort by</label>
+        <select class="form-control col-4" id="sel1" [(ngModel)]="sortingMethod" name="sort"
+                (ngModelChange)="updateSorting()">
+            <option selected>Relative value</option>
+            <option>Absolute value</option>
+        </select>
+    </div>
+</form>
+<div class="col-12 svgWrapperBar">
+    <svg id="{{chart.id + '_svg'}}" class="custom-chart" width="1100" height="400"></svg>
+</div>
+<!--<button class="btn btn-primary" targetMarket="button" (click)="drawChart()">Draw Chart</button>-->
+
+
+<div id="indicatorDetailsDialog" class="modal fade" role="dialog">
+    <div class="modal-dialog" role="document" style="height: 1em">
+        <div class="modal-content" style="width: 150%; left: -15%;">
+            <div class="modal-header">
+                <h5 class="indicatorDetails-title">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span>&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p id="indicatorDetails-content">Modal body text goes here.</p>
+                    </div>
+                </div>
+                <label class="col-3 float-right" id="ind_details_cor_label"></label>
+                <svg id="indicator-details-chart" height="240" width="480"></svg>
+            </div>
+            <div class="modal-footer">
+                <button id="addIndicator" type='button' class='btn btn-secondary' data-dismiss="modal"
+                        (click)="addIndicatorToCI($event)">Add to CI
+                </button>
+                <button id="removeIndicator" type='button' class='btn btn-secondary' data-dismiss="modal"
+                        (click)="removeIndicatorFromCI($event)">Remove from CI
+                </button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

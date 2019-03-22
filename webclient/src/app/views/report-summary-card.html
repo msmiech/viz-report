@@ -1,0 +1,23 @@
+<div class="card">
+    <div class="card-block">
+        <div class="title-block">
+            <h4 class="title">Summary</h4>
+        </div>
+        <!-- debug: <span>Current topic modelling library name: {{reportService.currentTopicModellingLib}}</span>-->
+        <div [ngSwitch]="reportService.currentTopicModellingLib">
+            <span class="brief-summary-sub-title">Topics</span>
+            <div *ngSwitchCase="'lda (remote)'">
+                <ul class="topic"
+                    *ngFor="let currentTopic of reportService.lastGlobalLdaResult; index as i">
+                    <li class="topic-list-brief" id="topic-list-global-{{i}}">
+                        Topic {{i + 1}}:
+                        <span *ngFor="let currentTerm of currentTopic">
+                                        {{currentTerm.term}} ({{currentTerm.probability}}%)
+                        </span>
+                    </li>
+                </ul>
+            </div>
+            <div id="biset-container" *ngSwitchCase="'nmf'"></div>
+        </div>
+    </div>
+</div>

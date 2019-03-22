@@ -1,0 +1,173 @@
+<div class="modal-dialog" role="document" style="height: 1em; max-width: 100%; width: 50%;">
+    <div *ngIf="reportService.selectedReportEntry" class="modal-content" style="width: 150%; left: -15%;">
+        <div class="modal-header">
+            <h5 class="modal-title">{{reportService.selectedReportEntry.title}}</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span>&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div *ngIf="reportService.selectedReportEntry.evals && reportService.selectedReportEntry.evals.length > 0"
+                     class="col-md-4">
+                    <h5>Evaluation</h5>
+                    <div id="modal-body-eval">
+                        <div *ngFor="let evaluation of reportService.selectedReportEntry.evals">
+                            <div [ngSwitch]="evaluation.operation.feature">
+
+                                <div *ngSwitchCase="'Noun selection'">
+                                    <span class="brief-summary-sub-title">
+                                        Noun Selection
+                                    </span>
+                                    <div>
+                                        <label for="noun-highlighting-enabled">
+                                            <input id="noun-highlighting-enabled" type="checkbox" class="checkbox"
+                                                   [checked]="ckbNounHighlighting"
+                                                   (change)="ckbNounHighlighting = !ckbNounHighlighting"/>
+                                            <span>Noun Highlighting Enabled</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div *ngSwitchCase="'Verb selection'">
+                                    <span class="brief-summary-sub-title">
+                                        Verb Selection
+                                    </span>
+                                    <div>
+                                        <label for="verb-highlighting-enabled">
+                                            <input id="verb-highlighting-enabled" type="checkbox" class="checkbox"
+                                                   [checked]="ckbVerbHighlighting"
+                                                   (change)="ckbVerbHighlighting = !ckbVerbHighlighting"/>
+                                            <span>Verb Highlighting Enabled</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div *ngSwitchCase="'Adjective selection'">
+                                    <span class="brief-summary-sub-title">
+                                        Adjective Selection
+                                    </span>
+                                    <div>
+                                        <label for="adj-highlighting-enabled">
+                                            <input id="adj-highlighting-enabled" type="checkbox" class="checkbox"
+                                                   [checked]="ckbAdjHighlighting"
+                                                   (change)="ckbAdjHighlighting = !ckbAdjHighlighting"/>
+                                            <span>Adjective Highlighting Enabled</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div *ngSwitchCase="'Topic Modelling'">
+                                    <div>
+                                        <span class="brief-summary-sub-title">
+                                            Topic Modelling
+                                        </span>
+                                        <div>
+                                            <label for="topic-highlighting-enabled">
+                                                <input id="topic-highlighting-enabled" type="checkbox" class="checkbox"
+                                                       [checked]="ckbTopicHighlighting"
+                                                       (change)="ckbTopicHighlighting = !ckbTopicHighlighting"/>
+                                                <span>
+                                                    Topic Highlighting Enabled
+                                                </span>
+                                            </label>
+                                        </div>
+
+                                        <div [ngSwitch]="evaluation.operation.library">
+                                            <div *ngSwitchCase="'lda (remote)'">
+                                                <div class="topic"
+                                                     *ngFor="let currentTopic of evaluation.result; index as i">
+                                                    <h6>Topic {{i + 1}}</h6>
+                                                    <ul class="topic-list" id="topic-list-lda-{{i}}">
+                                                        <li *ngFor="let currentTerm of currentTopic">
+                                                            {{currentTerm.term}} ({{currentTerm.probability}}%)
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div *ngSwitchCase="'nmf'">
+                                                <div class="topic"
+                                                     *ngFor="let entry of evaluation.result.topicEstimation; index as i">
+                                                    <h6>Topic {{i + 1}}:</h6>
+                                                    <ul class="topic-list" id="topic-list-nmf-{{i}}">
+                                                        <li *ngFor="let currentTerm of entry">
+                                                            {{currentTerm.term}} (Score:
+                                                            {{currentTerm.score.toFixed(2)}})
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div> <!-- end of lib switch-->
+                                    </div>
+                                </div>
+                                <div *ngSwitchCase="'Sentiment'">
+                                    <div>
+                                        <span class="brief-summary-sub-title">
+                                            Sentiment
+                                        </span>
+                                        <div>
+                                            <label for="sentiment-highlighting-enabled">
+                                                <input id="sentiment-highlighting-enabled" type="checkbox"
+                                                       class="checkbox" value="false"
+                                                       [checked]="ckbSentimentHighlighting"
+                                                       (change)="ckbSentimentHighlighting = !ckbSentimentHighlighting"/>
+                                                <span>
+                                                    Sentiment Highlighting Enabled
+                                                </span>
+                                            </label>
+
+                                        </div>
+
+                                        <p class="positive">
+                                            Positive: {{countPositiveSentiments(evaluation)}}
+                                        </p>
+                                        <p class="neutral">
+                                            Neutral: {{countNeutralSentiments(evaluation)}}
+                                        </p>
+                                        <p class="negative">
+                                            Negative: {{countNegativeSentiments(evaluation)}}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div *ngSwitchCase="'Termlist rating'">
+                                    <div>
+                                        <span class="brief-summary-sub-title">
+                                            Termlist rating
+                                        </span>
+                                        <div>
+                                            <label for="termlist-highlighting-enabled">
+                                                <input id="termlist-highlighting-enabled" type="checkbox"
+                                                       class="checkbox" value="false"
+                                                       [checked]="ckbTermlistHighlighting"
+                                                       (change)="ckbTermlistHighlighting = !ckbTermlistHighlighting"/>
+                                                <span>
+                                                    Termlist Highlighting Enabled
+                                                </span>
+                                            </label>
+
+                                        </div>
+                                        <p class="positive">
+                                            Positive term hits: {{evaluation.result.PositiveSum}}
+                                        </p>
+                                        <p class="negative">
+                                            Negative term hits: {{evaluation.result.NegativeSum}}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <h5>Complete text</h5>
+                    <div id="modal-body-text" [innerHtml]="renderCompleteText(reportService.selectedReportEntry)">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+    </div>
+</div>

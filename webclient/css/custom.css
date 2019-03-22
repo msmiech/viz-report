@@ -1,0 +1,229 @@
+/**
+Custom CSS for BA_2017
+ */
+
+.custom-chart {
+    margin-bottom: 5%;
+    overflow: hidden;
+}
+
+.custom-chart rect.bar:hover {
+    fill: #e7ef2c;
+}
+
+.line_chart_xAxis text {
+    font: 8px sans-serif;
+}
+
+path {
+    fill: none;
+    stroke-width: 2;
+    stroke: #000000;
+}
+
+.tooltip {
+    width: 100px;
+}
+
+.area.above {
+    fill: rgb(252, 191, 198);
+    stroke: none;
+}
+
+.area.below {
+    fill: rgb(179, 207, 152);
+    stroke: none;
+}
+
+/*------Target Market CSS START*-------*/
+
+.navigator .area {
+    fill: lightgrey;
+    stroke-width: 0px;
+}
+
+.navigator .line {
+    fill: none;
+    stroke: darkgrey;
+    stroke-width: 1px;
+}
+
+.navigator .viewport {
+    stroke: grey;
+    fill: black;
+    fill-opacity: 0.2;
+}
+
+.target_market_path {
+    stroke-width: 3;
+    stroke: #3d9dc4;
+}
+
+/*------Target Market CSS END*-------*/
+
+.pos-tag-noun {
+    color: mediumseagreen;
+}
+
+.pos-tag-verb {
+    color: #ff8900;
+}
+
+.pos-tag-adj {
+    color: #9c69ce;
+}
+
+.sentiment-positive {
+    background-color: lightgreen;
+}
+
+.sentiment-negative {
+    background-color: lightcoral;
+}
+
+.termlist-positive {
+    background-color: #68f0dd;
+}
+
+.termlist-negative {
+    background-color: #f05abd;
+}
+
+.topic-line {
+    background-color: #f0e147;
+}
+
+.brief-summary-title {
+    font-size: 1em;
+    margin-top: 0.5em;
+}
+
+.brief-summary-sub-title {
+    font-weight: bold;
+}
+
+.feed-score {
+    right: -90%;
+    top: 0;
+    height: 2em;
+    width: 3em;
+    background-color: lightyellow;
+    padding: 0.5%;
+    border: solid lightgoldenrodyellow;
+    border-radius: 5px;
+    font-size: 90%;
+}
+
+.feed-score-positive {
+    color: rgba(80, 187, 0, 0.76);
+}
+
+.feed-score-negative {
+    color: #ff4f00;
+}
+
+/** The following is
+based on BiSet edge bundeling - https://github.com/eibens/biset
+ */
+.background {
+    transition: all 0.25s;
+}
+
+[data-focus] .background {
+    fill: #fb4400;
+}
+
+[data-focus="0"] .background {
+    fill: rgba(85, 216, 239, 0.6);
+}
+
+[data-focus="1"] .background {
+    fill: rgba(87, 226, 249, 0.4);
+}
+
+[data-focus="2"] .background {
+    fill: #ffc7b2;
+}
+
+[data-focus="3"] .background {
+    fill: #ffaa78;
+}
+
+[data-focus="4"] .background {
+    fill: #ff8b4f;
+}
+
+[data-focus="5"] .background {
+    fill: #ff7324;
+}
+
+[data-focus="6"] .background {
+    fill: #ff6b00;
+}
+
+.selected .background {
+    stroke-width: 2;
+    stroke: #3b3b3b;
+}
+
+.entity .indicator {
+    fill: rgba(0, 0, 0, 0.12);
+    pointer-events: none;
+}
+
+.entity .text {
+    pointer-events: none;
+}
+
+.link {
+    stroke-width: 1;
+    fill: none;
+    transition: all 0.3s;
+}
+
+.link.highlighted {
+    stroke: #b9a2fb !important;
+}
+
+.link[data-focus] {
+    stroke: black;
+    stroke-width: 2;
+}
+
+.link[data-focus="0"] {
+    stroke: rgba(0, 0, 0, 0.1);
+    stroke-width: 1
+}
+
+.link[data-focus="1"] {
+    stroke: rgba(0, 0, 0, 0.3);
+}
+
+.link[data-focus="2"] {
+    stroke: rgba(0, 0, 0, 0.4);
+}
+
+.link[data-focus="3"] {
+    stroke: rgba(0, 0, 0, 0.5);
+}
+
+.link[data-focus="4"] {
+    stroke: rgba(0, 0, 0, 0.6);
+}
+
+.link[data-focus="5"] {
+    stroke: rgba(0, 0, 0, 0.7);
+}
+
+.link[data-focus="6"] {
+    stroke: rgba(0, 0, 0, 0.8);
+}
+
+.link[data-focus="7"] {
+    stroke: rgba(0, 0, 0, 0.9);
+}
+
+.bundle .indicator {
+    fill: rgba(0, 0, 0, 0.12);
+    pointer-events: none;
+}

@@ -1,0 +1,118 @@
+<div class="card">
+    <div class="card-header card-header-sm bordered">
+        <div class="header-block">
+            <h3 class="title">Report Loader</h3>
+        </div>
+        <ul class="nav nav-tabs pull-right" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" href="#tab-rss" role="tab" data-toggle="tab" aria-expanded="true"
+                   (click)="setReportDataSource('RSS')">RSS</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#tab-file" role="tab" data-toggle="tab" aria-expanded="false"
+                   (click)="setReportDataSource('File')">File</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="card-block">
+        <div class="tab-content">
+            <div id="tab-rss" class="tab-pane fade active show">
+                <div class="title-block">
+                    <h4 class="title">
+                        RSS Data Source
+                    </h4>
+                    <p class="title-description">
+                        Load RSS feeds from the provided URL
+                    </p>
+                </div>
+
+                <form>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                Amount of entries
+                            </span>
+                        </div>
+                        <input type="number" name="feedCountInput" class="form-control" [(ngModel)]="feedCount"
+                               placeholder="3" min="1" max="99">
+                    </div>
+
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <input type="radio" id="feedUrlRadioMining" name="miningUrlRadio"
+                                       [(ngModel)]="customUrlRadio"
+                                       value="false" checked>
+                            </span>
+                            <span class="input-group-text">
+                                Feed
+                            </span>
+                        </div>
+                        <select class="form-control" (change)="onFeedSelectionChanged($event.target.value)">
+                            <option selected disabled>Choose...</option>
+                            <option value="aluminum">Aluminum</option>
+                            <option value="chromite">Chromite</option>
+                            <option value="coal">Coal</option>
+                            <option value="cobalt">Cobalt</option>
+                            <option value="copper">Copper</option>
+                            <option value="diamond">Diamond</option>
+                            <option value="gold">Gold</option>
+                            <option value="iron-ore">Iron Ore</option>
+                            <option value="molybdenum">Molybdenum</option>
+                            <option value="nickel">Nickel</option>
+                            <option value="oil-sands">Oil Sands</option>
+                            <option value="palladium">Palladium</option>
+                            <option value="platinum">Platinum</option>
+                            <option value="potash">Potash</option>
+                            <option value="silver">Silver</option>
+                            <option value="tin">Tin</option>
+                            <option value="tantulum">Tantulum</option>
+                            <option value="tungsten">Tungsten</option>
+                            <option value="uranium">Uranium</option>
+                            <option value="vanadium">Vanadium</option>
+                            <option value="zinc">Zinc</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <input type="radio" name="customUrlRadio" [(ngModel)]="customUrlRadio" value="true">
+                            </span>
+                            <span class="input-group-text">
+                                URL
+                            </span>
+                        </div>
+                        <input class="form-control" name="url" [(ngModel)]="customUrl" placeholder="Custom RSS URL">
+                    </div>
+
+                </form>
+            </div>
+            <div id="tab-file" class="tab-pane fade">
+                <div class="title-block">
+                    <h4 class="title">
+                        Text File Data Source
+                    </h4>
+                    <p class="title-description">
+                        Load entries from selected text file
+                    </p>
+                </div>
+                <form>
+                    <input id="input-files" name="input-files" type="file" class="form-control file" multiple
+                           data-show-upload="false" data-show-caption="true"
+                           data-msg-placeholder="Select {files} for upload..."
+                           accept=".txt" (change)="setSelectedFiles($event)">
+                </form>
+            </div>
+        </div>
+
+
+    </div>
+    <div class="card-footer">
+        <button id="btnLoadFeed" class="btn btn-primary" type="button"
+                (click)="onLoadReportButtonClicked()">
+            Load Report
+        </button>
+    </div>
+</div>

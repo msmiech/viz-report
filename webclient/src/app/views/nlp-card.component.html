@@ -1,0 +1,157 @@
+<div class="card">
+    <div class="card-block">
+
+        <div class="title-block">
+            <h4 class="title">
+                NLP Operations
+            </h4>
+            <p class="title-description">
+                Customize and apply NLP operations
+            </p>
+        </div>
+
+        <form class="nlp-controls">
+            <div class="form-group row" *ngFor="let nlpControl of nlpControls; let i = index">
+                <div class="col-md-1 col-form-label">
+                    {{i + 1}}
+                </div>
+                <label class="col-md-2 control-label col-form-label">Feature</label>
+                <div class="col-md-5">
+                    <select title="Feature" class="form-control" (change)="onSelectedFeatureChange(nlpControl, $event.target.value)">
+                        <option *ngFor="let feature of availableNlpFeatures(nlpControl.feature)">{{feature}}</option>
+                    </select>
+                </div>
+
+                <div class="col-md-3">
+                    <button type="button" class="btn btn-secondary" style="margin-top: 3px;" (click)="openNlpControlSettings(nlpControl)">
+                        Parameters
+                    </button>
+                </div>
+                <div class="col-md-1">
+                    <button type="button" class="btn btn-secondary" style="margin-top: 3px;" (click)="removeNlpControl(nlpControl)"
+                            [attr.disabled]="nlpControls.length < 2 ? true : null">
+                        <i class="fa fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+
+            <button type="button" class="btn btn-secondary" (click)="addNlpControl()"
+                    [attr.disabled]="availableNlpFeatures().length == 0 ? true : null">
+                <i class="fa fa-plus"></i>
+            </button>
+
+            <div class="col-12">
+                <label>
+                    <input type="checkbox" class="checkbox" [checked]="showSummary"
+                           (change)="showSummary = !showSummary"/>
+                    <span>Create Global Summary</span>
+                </label>
+            </div>
+        </form>
+    </div>
+
+    <div class="card-footer">
+        <button class="btn btn-primary"
+                type="button"
+                (click)="executeNlpPipeline()">
+            Execute
+        </button>
+        <button class="btn btn-secondary"
+                type="button"
+                (click)="resetNlpOperations()">
+            Reset
+        </button>
+    </div>
+</div>
+
+<div id="nlpSettingsDialog" class="modal fade" role="dialog">
+    <div class="modal-dialog" role="document" style="height: 1em">
+        <div *ngIf="selectedNlpControl" class="modal-content" style="width: 150%; left: -15%;">
+            <div class="modal-header">
+                <h5 class="modal-title">Parameters for {{selectedNlpControl.feature}}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span>&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row" *ngIf="featureHasParams(selectedNlpControl.feature)">
+                    <div class="col-md-6">
+                        <h5>Parameters</h5>
+                        <select title="Parameter Name" class="form-control"
+                                [(ngModel)]="selectedNlpControlParamName">
+                            <option *ngFor="let paramName of possibleParamNamesForFeature(selectedNlpControl.feature)">
+                                {{paramName}}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="col-md-6"
+                         [ngSwitch]="paramValueType(selectedNlpControl.feature, selectedNlpControlParamName)">
+                        <div class="nlp-param value-type-select" *ngSwitchCase="'select_one'">
+                            <h5>Values</h5>
+                            <select title="Parameter Value" class="form-control"
+                                    (change)="onSelectedParamValueChanged($event.target.value)">
+                                <option *ngFor="let param of possibleParamValues(selectedNlpControl.feature, selectedNlpControlParamName)">
+                                    {{param}}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="nlp-param value-type-select" *ngSwitchCase="'select_many'">
+                            <h5>Values</h5>
+                            <select title="Parameter Value" class="form-control" multiple
+                                    (change)="onSelectedParamValueChanged($event.target.value)">
+                                <option *ngFor="let param of possibleParamValues(selectedNlpControl.feature, selectedNlpControlParamName)">
+                                    {{param}}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="nlp-param value-type-select" *ngSwitchCase="'string[]'">
+                            <h5>Values</h5>
+                            <textarea title="Parameter Value" class="form-control"
+                                      [(ngModel)]="paramDialogFieldValues[selectedNlpControlParamName]"
+                                      (change)="onSelectedParamValueChanged($event.target.value)">
+                            </textarea>
+                            <input id="param-input-file" name="param-input-file" type="file" class="form-control file"
+                                   data-show-upload="false" data-show-caption="true"
+                                   data-msg-placeholder="Select {file} for upload..."
+                                   accept=".txt" (change)="readParamValueFromFile(selectedNlpControlParamName, $event)">
+                        </div>
+                        <div class="nlp-param value-type-number" *ngSwitchCase="'number'">
+                            <h5>Values</h5>
+                            <input type="number" class="form-control"
+                                   [(ngModel)]="paramDialogFieldValues[selectedNlpControlParamName]"
+                                   (change)="onSelectedParamValueChanged($event.target.value)" placeholder="1" min="1"
+                                   max="15">
+                        </div>
+                        <div class="nlp-param value-type-boolean" *ngSwitchCase="'boolean'">
+                            <h5>Values</h5>
+                            <label>
+                                <input type="checkbox" class="checkbox"
+                                       [checked]="paramDialogBooleanValues[selectedNlpControlParamName]"
+                                       (change)="paramDialogBooleanValues[selectedNlpControlParamName] = !paramDialogBooleanValues[selectedNlpControlParamName]; onSelectedParamValueChanged(paramDialogBooleanValues[selectedNlpControlParamName] + '')">
+                                <span> </span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 0.5em;"
+                     *ngIf="librariesForFeature(selectedNlpControl.feature).length > 0">
+                    <div class="col-md-6">
+                        <label class="control-label" style="margin-top: 0.5em; margin-left: 1.0em;">Library</label>
+                    </div>
+                    <div class="col-md-6">
+                        <select class="form-control"
+                                (change)="onSelectedLibraryChange(selectedNlpControl, $event.target.value)">
+                            <option *ngFor="let library of librariesForFeature(selectedNlpControl.feature)">
+                                {{library}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

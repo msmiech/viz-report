@@ -1,0 +1,28 @@
+<header class="header">
+    <div class="header-block header-block-collapse d-lg-none d-xl-none">
+        <button class="collapse-btn" id="sidebar-collapse-btn">
+            <i class="fa fa-bars"></i>
+        </button>
+    </div>
+
+    <div class="header-block header-block-nav">
+        <ul class="nav-profile">
+            <li class="profile dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                   aria-expanded="false">
+                    <span class="name"> Username </span>
+                </a>
+                <div class="dropdown-menu profile-dropdown-menu" aria-labelledby="dropdownMenu1">
+
+                    <a *ngIf="isOptionsShown()" class="dropdown-item" [routerLink]="['/options']">
+                        <i class="fa fa-gear icon"></i> Settings
+                    </a>
+                    <a *ngIf="isLogoutShown()" class="dropdown-item" (click)="doLogout()">
+                        <i class="fa fa-power-off icon"></i> Logout
+                    </a>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+</header>

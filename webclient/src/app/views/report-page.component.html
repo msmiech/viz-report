@@ -1,0 +1,43 @@
+<topbar></topbar>
+<nav-sidebar></nav-sidebar>
+<article class="content dashboard page">
+    <section class="section">
+        <div class="row">
+
+            <div class="col col-xs-12 col-sm-12 col-md-4 col-xl-4">
+                <report-loader-card></report-loader-card>
+            </div>
+
+            <div id="nlpCard" class="col col-xs-12 col-sm-12 col-md-8 col-xl-8"
+                 *ngIf="!reportService.isLoading() && reportService.report != null">
+                <nlp-card></nlp-card>
+            </div>
+        </div>
+
+    </section>
+
+    <section id="report-output" class="section">
+
+        <div id="report" class="row" *ngIf="reportService.report">
+
+            <report-summary-card id="report-summary"
+                                 *ngIf="reportService.showSummary && reportService.showGlobalSummary()"
+                                 class="col col-xs-12 col-sm-12 col-md-12 col-xl-12">
+
+            </report-summary-card>
+
+            <report-entry-card *ngFor="let reportEntry of reportService.report.items; index as i" id="report-{{i}}"
+                               class="col col-xs-12 col-sm-12 col-md-12 col-xl-6" [reportEntry]="reportEntry"
+                               [reportEntryIndex]="i">
+
+            </report-entry-card>
+        </div>
+    </section>
+</article>
+
+
+<report-detail-dialog id="reportDialog" class="modal fade" role="dialog">
+
+</report-detail-dialog>
+
+<custom-footer></custom-footer>

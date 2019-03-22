@@ -1,0 +1,15 @@
+CLIENT:
+
+d3: BSD 3-clause "New" or "Revised" License
+snowball: MOZILLA PUBLIC LICENSE
+tslint: Apache License 2.0
+TypeScript: Apache License 2.0
+nmf-js, Snowball-js: No license info
+
+
+SERVER:
+
+document-tfidf: No license info
+lda: Apache License 2.0
+
+All remaining libs are MIT licensed

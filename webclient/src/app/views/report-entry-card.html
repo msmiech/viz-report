@@ -1,0 +1,88 @@
+<div class="card">
+    <div class="card-block">
+        <div class="title-block">
+            <h4 class="title">{{reportEntry.title}}</h4>
+            <sup class="feed-score"
+                 *ngIf="reportEntry.evals && reportEntry.evals.length > 0 && reportEntry.evals[0].operation.feature == 'Termlist rating'">
+                <span class="feed-score-positive">P: {{reportEntry.evals[0].result.PositiveSum}}</span>
+                <span class="feed-score-negative">N: {{reportEntry.evals[0].result.NegativeSum}}</span>
+            </sup>
+        </div>
+        <div class="feed-body-short">
+            {{removeHtmlTagsFromString(reportEntry.description)}}
+        </div>
+        <div *ngIf="reportService.showBriefSummariesForEntry(reportEntry)" class="feed-brief-summary">
+            <h5 class="brief-summary-title">
+                Brief Summary
+            </h5>
+            <div *ngFor="let evaluation of reportEntry.evals">
+                <div [ngSwitch]="evaluation.operation.feature">
+                    <div *ngSwitchCase="'Topic Modelling'">
+                        <div [ngSwitch]="evaluation.operation.library">
+                            <span class="brief-summary-sub-title">Topics</span>
+                            <div *ngSwitchCase="'lda (remote)'">
+                                <ul class="topic"
+                                    *ngFor="let currentTopic of evaluation.result; index as i">
+                                    <li class="topic-list-brief" id="topic-lda-brief-{{i}}">
+                                        Topic {{i + 1}}:
+                                        <span *ngFor="let currentTerm of currentTopic">
+                                            {{currentTerm.term}} ({{currentTerm.probability}}%)
+                                        </span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div *ngSwitchCase="'nmf'">
+                                <div id="brief-nmf-chart-{{index}}" (load)="drawBarchart(evaluation.result)">
+                                    <!-- TODO insert barchart here-->
+                                </div>
+                                <ul class="topic"
+                                    *ngFor="let entry of evaluation.result.topicEstimation; index as i">
+                                    <li>Topic {{i + 1}}
+                                        <ul class="topic-list-brief" id="topic-nmf-brief-{{i}}">
+                                            <li *ngFor="let currentTerm of entry">
+                                                {{currentTerm.term}} (Score:
+                                                {{currentTerm.score.toFixed(2)}})
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngSwitchCase="'Sentiment'"> <!--evaluation.result-->
+                        <div>
+                            <span class="brief-summary-sub-title">Sentiment</span>
+                            <p class="positive">
+                                Positive: {{countPositiveSentiments(evaluation)}}
+                            </p>
+                            <p class="neutral">
+                                Neutral: {{countNeutralSentiments(evaluation)}}
+                            </p>
+                            <p class="negative">
+                                Negative: {{countNegativeSentiments(evaluation)}}
+                            </p>
+                        </div>
+                    </div>
+                    <div *ngSwitchCase="'Termlist rating'">
+                        <div>
+                            <span class="brief-summary-sub-title">Termlist rating</span>
+                            <p class="positive">
+                                Positive term hits: {{reportEntry.evals[0].result.PositiveSum}}
+                            </p>
+                            <p class="negative">
+                                Negative term hits: {{reportEntry.evals[0].result.NegativeSum}}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-footer">
+        <button class="btn btn-primary btn-expand-feed"
+                type="button"
+                (click)="onExpandFeedClicked(reportEntry)">
+            Expand
+        </button>
+    </div>
+</div>

@@ -1,0 +1,93 @@
+<topbar></topbar>
+<nav-sidebar></nav-sidebar>
+
+<article class="content dashboard page col-12" style="min-height: 1000px">
+        <div class="sameheight-container row">
+            <div class="col-12">
+                <div id="card1" class="card sameheight-item">
+                    <div class="card-block">
+                        <div class="title-block">
+                            <h4 class="title">
+                                Admin View - add further technical indicators
+                            </h4>
+                        </div>
+                        <form role="form">
+                            <div class="form-group row">
+                                <label class="control-label col-2">Select market:</label>
+                                <div class="col-2">
+                                    <label>
+                                        <input class="radio" name="radios" type="radio" checked="checked"
+                                               value="nickel" [(ngModel)]="selectedMarket">
+                                        <span>Nickel</span>
+                                    </label>
+                                </div>
+                                <div class="col-2">
+                                    <label>
+                                        <input class="radio" name="radios" type="radio" value="iron"
+                                               [(ngModel)]="selectedMarket">
+                                        <span>Iron Ore</span>
+                                    </label>
+                                </div>
+                                <div class="col-2">
+                                    <label>
+                                        <input class="radio" name="radios" type="radio" value="copper"
+                                               [(ngModel)]="selectedMarket">
+                                        <span>Copper</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-2" for="chart-type-menu">Select indicator:</label>
+                                <select class="form-control col-3" id="chart-type-menu" [(ngModel)]="chartType"
+                                        name="sort">
+                                    <option>ATR</option>
+                                </select>
+                                <div class="col-1"></div>
+                                <label class="col-2" for="chart-size-menu">Select chart size:</label>
+                                <select class="form-control col-3" id="chart-size-menu" [(ngModel)]="chartSize"
+                                        name="sort">
+                                    <option value="L" selected>Large</option>
+                                    <!--<option value="M">Medium</option>-->
+                                    <option value="S">Small</option>
+                                </select>
+                            </div>
+                            <div class="form-group row">
+                                <label class="control-label col-2">Select time period:</label>
+                                <div class="col-2" style="padding-left: 0; padding-right: 30px">
+                                    <input class="form-control" type="date" value="2016-08-01"
+                                           id="start-date" name="startDate" [(ngModel)]="selectedStartDate">
+                                </div>
+                                <i class="fa fa-minus" style="align-self: center;"></i>
+                                <div class="col-2">
+                                    <input class="form-control" type="date" value="2017-08-01"
+                                           id="end-date" name="endDate" [(ngModel)]="selectedEndDate">
+                                </div>
+                            </div>
+                            <button class="btn btn-primary" type="button" (click)="addChart()" style="float:right">Add
+                                Card
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <section class="row">
+            <ng-container *ngFor="let indicator of charts">
+                <div id="{{indicator.id + '_card_container'}}" class="col col-xs-12 col-sm-12">
+                    <div id="{{indicator.id + '-chart-card'}}" class="card sameheight-item">
+                        <div class="card-block">
+                            <a class="fa fa-times" style="float: right" (click)="removeChart(indicator.id)"></a>
+                            <ng-container *ngIf="indicator.chartType=='ATR'">
+                                <atr-chart [chart]="indicator"></atr-chart>
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+
+        </section>
+</article>
+
+
+<custom-footer></custom-footer>
