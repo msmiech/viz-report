@@ -12,8 +12,6 @@ let bodyParser = require('body-parser');
 let jwt = require('jsonwebtoken');
 let cors = require('cors');
 
-let https = require('https');
-
 let lda = require('lda');
 let stopword = require('stopword');
 let tm = require('text-miner');
@@ -25,10 +23,6 @@ let invalid_tokens = [];
 
 let system_start = new Date();
 let failed_logins = 0;
-let httpsOptions = {
-    key: fs.readFileSync("key.pem"),
-    cert: fs.readFileSync("cert.pem")
-};
 
 let parseXlsx = require('excel');
 
@@ -392,11 +386,6 @@ let server = app.listen(8081, function () {
     console.log("Data Analysis REST Server listening at http://%s:%s", host, port);
 
 });
-
-/**
- * Creates an HTTPS server on Port 8000 and provides REST interface as well
- */
-https.createServer(httpsOptions, app).listen(8000);
 
 
 
