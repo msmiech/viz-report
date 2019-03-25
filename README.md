@@ -2,7 +2,10 @@
 
 Viz-Report is a prototype of a commodity market analysis tool which makes use of various visualization techniques (including charts and textvis), as well as NLP.
 
-![alt text](resources/screenshots/report_screen0.png)
+<p>
+  <img height="595" src="resources/screenshots/report_screen0.png">
+  <img height="595" src="resources/screenshots/viz_screen0.png"> 
+</p>
 
 ## Implementation
 ### Libraries and Frameworks
